@@ -1,13 +1,313 @@
+html,
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    height: 98%;
+    width: 100%;
+    margin: 0px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.loginPage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 92vh;
+    background-color: #a7bcff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    border: 2px solid black;
+    padding: 20px 60px;
+    border-radius: 15px;
+    width: 250px;
+    gap: 15px;
+    background-color: white;
+}
+
+.container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.container form input {
+    width: 250px;
+    padding: 15px;
+    border: none;
+    border-bottom: 1px solid #a7bcff;
+}
+
+button {
+    background-color: #7b96ec;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+/*Booking Page*/
+.title {
+    color: #5d5b8d;
+    font-size: 30px;
+}
+
+.booking-container {
+    background-image: url("../src/hotel.jpg");
+    background-repeat: no-repeat;
+    height: 753px;
+    background-size: cover;
+    opacity: 0.8;
+}
+
+.booking-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+
+}
+
+.booking-form form {
+    border: 2px solid black;
+    padding: 20px 60px;
+    border-radius: 15px;
+    background-color: rgb(237, 235, 232);
+}
+
+.heading {
+    color: #04010a;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    height: 70px;
+}
+
+.in {
+    border: none;
+    border-bottom: 1px solid #a7bcff;
+    margin: 20px 30px 20px 30px;
+    font-size: larger;
+    padding: 10px 10px;
+    background: transparent;
+}
+
+.check {
+    display: flex;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 30px;
+    top: 15px;
+    margin: 10px 10px 10px 10px;
+}
+
+.check span {
+    font-size: larger;
+    color: rgb(101, 98, 98);
+}
+
+.time {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    left: 205px;
+    top: 15px;
+    margin: 10px 10px 10px 10px;
+}
+
+.time input {
+    width: 100px;
+    height: 17px;
+}
+
+.date input {
+    width: 100px;
+    height: 17px;
+}
+
+.room-type {
+    position: relative;
+    left: 38px;
+    top: 15px;
+    margin: 30px 10px 40px 0px;
+}
+
+p {
+    font-size: larger;
+    color: rgb(101, 98, 98);
+}
+
+.booking-form button {
+    position: relative;
+    left: 260px;
+    top: 15px;
+    margin-bottom: 10px;
+}
+
+.navbar {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0px 10px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 0 25px 0 black;
+    background-color: #d9d8b5;
+    z-index: 1;
+    position: sticky;
+}
+
+.navbar * {
+    display: inline;
+    position: relative;
+    top: 0;
+}
+
+.navbar li {
+    margin: 20px;
+    cursor: pointer;
+}
+
+.navbar li a {
+    color: black;
+    text-decoration: none;
+}
+
+.navbar li button {
+    background-color: transparent;
+    color: black;
+    font-size: medium;
+}
+
+.head {
+    /* position: relative;
+    left: 40px; */
+    flex-grow: 1;
+    font-size: 25px;
+}
+
+.info {
+    background-image: url("../src/room.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 693px;
+    width: 1536px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+}
+
+#first {
+    position: relative;
+    top: 35px;
+}
+
+#second {
+    position: relative;
+    bottom: 15px;
+}
+
+.info h1 {
+    font-size: 40px;
+    font-weight: bolder;
+    color: #16132e;
+    opacity: 1;
+}
+
+.info p {
+    width: 700px;
+    color: rgb(248, 246, 246);
+    position: relative;
+    left: 50px;
+    font-size: 19px;
+    opacity: 1;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("../src/main.jpg");
+    opacity: 0.8;
+}
+
+.box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    border-radius: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    margin: 10px 10px 10px 10px;
+    cursor: pointer;
+    box-shadow: -10px 10px 12px #98cec9;
+    transition: 0.5s ease-in;
+    z-index: 1;
+    background-color:  #88aaccee;
+}
+
+.box a{
+    text-decoration: none;
+    font-size: 30px;
+    rotate: -15deg;
+    color: #1b3252; 
+    font-weight: bolder;
+}
+
+
+
+.box:first-child {
+    position: absolute;
+    left: 150px;
+    bottom: 220px;
+    animation: loader 3s;
+}
+
+.box:nth-child(2) {
+    position: absolute;
+    bottom: 220px;
+    animation: loader 3s;
+}
+
+.box:last-child {
+    position: absolute;
+    right: 150px;
+    bottom: 220px;
+    animation: loader 3s;
+}
+
+@keyframes loader {
+    0% {
+        rotate: 0deg;
+    }
+    25% {
+        rotate: y 90deg;
+        scale: 0.5;
+    }
+    50% {
+        rotate: 180deg;
+    }
+    75% {
+        rotate: x 270deg;
+        border-radius: 50%;
+    }
+    100% {
+        rotate: 360deg;
+    }
 }
