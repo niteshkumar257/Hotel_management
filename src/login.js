@@ -10,17 +10,18 @@ const Login = () => {
     const [password,setPassword]=useState("");
 
     const handleSubmit = (e) => {
+       
         
         e.preventDefault()
-        console.log('submit');
+      console.log(username,password)
     if(username && password)
     {
-      axios.post(`${config.apiUrl}token`,{
+      axios.post(`${config.apiUrl}login/`,{
         username:username,
         password:password
       }).then((res)=>
       {
-         console.log(res.data);
+         console.log(res);
          if(res.data.admin)   navigate("/mainPage")
          else navigate("/booking")
         
@@ -42,7 +43,7 @@ const Login = () => {
                     <span className="title">Sign In</span>
                     <form onSubmit={handleSubmit} >
                         <input type="username" placeholder="Username"  value={username} onChange={(e)=>setUserName(e.target.value)}/>
-                        <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                        <input placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
                         <button type="submit" >Submit</button>
                     </form>
                 </div>

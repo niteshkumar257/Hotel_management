@@ -4,6 +4,7 @@ import { useEffect,useState } from 'react';
 import User from './User';
 import "./Staff.scss"
 import {Box,Modal,TextField,Stack} from "@mui/material"
+const config=require('./config');
 
 const Staff = () => {
   
@@ -13,7 +14,7 @@ const Staff = () => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: 500,
-    height: 300,
+    height: 500,
     bgcolor: 'background.paper',
     border: 'none',
     borderRadius: 3,
@@ -118,7 +119,12 @@ const Staff = () => {
   const [open,setOpen]=useState(false);
   const [name,setName]=useState("");
   const [date,setDate]=useState("");
-  const [staffList,setStaffList]=useState(staffListArray);
+  const [firstName,setFirstName]=useState("");
+  const [lastName,setLastName]=useState("");
+  const [isStaff,setIsStaff]=useState(false);
+  const [userName,setUserName]=useState("");
+  const [password,setPassword]=useState("");
+  const [staffList,setStaffList]=useState([]);
   const handleClose=()=>
   {
     setOpen(false);
@@ -132,14 +138,13 @@ const Staff = () => {
 
 
    {
-        axios.get('https://sebackend.onrender.com/api/customer/',
-        {
-
-          headers: {"Authorization" : `Bearer ${token}` }
-          }).then(res=>
+        axios.get(`${config.apiUrl}api/stafflist`,
+      ).then(res=>
             {
               console.log(res)
+              setStaffList(res.data)
             })
+          
             .catch((err)=>{
               console.log(err);
             })
@@ -147,13 +152,29 @@ const Staff = () => {
    useEffect(()=>
    {
     getStaffDetails();
-   })
+   },[])
   const AddStaff=(e)=>
   {
 
+    console.log(firstName, lastName, userName, password, isStaff);
     e.preventDefault();
-    console.log(name,date)
-    console.log("staff is added");
+    setOpen(false);
+    axios.post(`${config.apiUrl}api/stafflist/`,{
+    
+      first_name:firstName,
+      last_name:lastName,
+      username:userName,
+      password:password,
+      isStaff:true
+    }).then(res=>
+      {
+        console.log(res);
+      }).catch((err)=>{
+        console.log(err);
+      })
+
+      getStaffDetails();
+     
   }
   return (
     <div className='main_container'>
@@ -179,13 +200,17 @@ const Staff = () => {
                               <div>
                                 <span>Add new Staff</span>
                               </div>
-                              <TextField sx={{ flex: 1 }} defaultValue="" value={name}label="Name of the staff" onChange={(e)=>setName(e.target.value)} helperText="Enter Name">
+                              <TextField sx={{ flex: 1 }} defaultValue="" value={firstName}label="first Name" onChange={(e)=>setFirstName(e.target.value)}>
+                                
+                                
                               
                               </TextField>
+                              <TextField sx={{ flex: 1 }} defaultValue="" value={lastName}label="Last Name" onChange={(e)=>setLastName(e.target.value)} ></TextField>
+                              <TextField sx={{ flex: 1 }} defaultValue="" value={userName}label="UserName" onChange={(e)=>setUserName(e.target.value)} ></TextField>
+                              <TextField sx={{ flex: 1 }} defaultValue="" value={password}label="Password" onChange={(e)=>setPassword(e.target.value)} ></TextField>
+                              <TextField sx={{ flex: 1 }} defaultValue="" value={isStaff}label="Staff" onChange={(e)=>setIsStaff(e.target.value)} ></TextField>
                               
-                              <TextField sx={{ flex: 1 }}
-                              type={"date"}
-                               onChange={(e)=>setDate(e.target.value)} helperText="Enter Joinig Date" />
+                            
                             </Stack>
                           </div>
                           <div style={{
@@ -214,9 +239,9 @@ const Staff = () => {
       </div>
       <div className='staff_container'>
         {
-          staffList.map((item)=>
+          staffList.map((item,inde)=>
           (
-            <User id={item.id}  status={item.is_staff} name={item.first_name} date_of_joining={item.date_joined}/>
+            <User key={item.id}  status={item.is_staff} name={item.first_name} date_of_joining={item.date_joined}/>
           ))
         }
          

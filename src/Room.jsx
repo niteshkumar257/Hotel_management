@@ -4,7 +4,7 @@ import { useEffect ,useState} from 'react'
 import DataTable from "./Component/DataTable";
 import Chart from './Component/Chart';
 import TextField from '@mui/material/TextField';
-import {Box,Modal,Stack} from '@mui/material'
+import {Box,Modal,Stack,MenuItem} from '@mui/material'
 const config = require('./config');
 
 
@@ -64,12 +64,22 @@ const row=[
       "room_status": "available"
   }
 ]
+const choices=[
+ {  value:"available",
+   lable:"Avialable"},
+   {
+    value:"not available",
+   lable:"Not Avialable"
+   }
+
+]
 const Room = () => {
-  const [rows,setRows]=useState(row);
-  const [month,setMonth]=useState("");
+  const [rows,setRows]=useState([]);
+  const [room,setRoom]=useState("");
   const [capacity,setCapacity]=useState("");
   const [roomStatus,setRoomStatus]=useState("");
   const [open,setOpen]=useState(false)
+  
   const style = {
     position: 'absolute',
     top: '50%',
@@ -123,13 +133,11 @@ const Room = () => {
   }
 
   const token = localStorage.getItem("auth_token");
-  useEffect(()=>
+  const getData=()=>
   {
-    axios.get('https://sebackend.onrender.com/api/roomno/',
-    {
-
-      headers: {"Authorization" : `Bearer ${token}` }
-      }).then(res=>
+    axios.get(`${config.apiUrl}api/roomno/`,
+    
+    ).then(res=>
         {
           console.log(res.data);
           setRows(res.data);
@@ -138,6 +146,10 @@ const Room = () => {
         .catch((err)=>{
           console.log(err);
         })
+  }
+  useEffect(()=>
+  {
+       getData();   
   },[])
      
   // post request 
@@ -146,13 +158,14 @@ const Room = () => {
     e.preventDefault();
     setOpen(false);
 
-    if(month && capacity && roomStatus)
+    if(room && capacity && roomStatus)
     {
+      console.log(room,capacity,roomStatus)
       e.preventDefault();
-      axios.post('api',{
-        month:month,
+      axios.post(`${config.apiUrl}api/roomno/`,{
+        room_no:room,
         capacity:capacity,
-        roomStatus:roomStatus
+        room_status:roomStatus
       }).then((res)=>
       {
         console.log(res);
@@ -163,6 +176,8 @@ const Room = () => {
         })
       }
     else console.log("else all fileds are required");
+
+    getData();
   }
   
   
@@ -203,8 +218,8 @@ const Room = () => {
                                 <span>Add new Room</span>
                               </div>
                               <TextField 
-        value={month}
-        onChange={(e)=>setMonth(e.target.value)}
+        value={room}
+        onChange={(e)=>setRoom(e.target.value)}
          id="outlined-basic" 
          label="Room NO"
           variant="outlined" />
@@ -215,14 +230,22 @@ const Room = () => {
         label="Capacity"
          variant="outlined" 
          />
-       <TextField 
-       value={roomStatus}
-       onChange={(e)=>setRoomStatus(e.target.value)
-      }
-       id="outlined-basic"
-        label="Room Status"
-         variant="outlined"
-          />
+         <TextField
+           value={roomStatus}
+           onChange={(e)=>setRoomStatus(e.target.value)
+          }
+           id="outlined-basic"
+            label="Room Status"
+             variant="outlined"
+             select
+         >
+        {choices.map((option)=>(
+            <MenuItem key={option.value} value={option.value}>
+            {option.lable}
+          </MenuItem>
+        ))}
+         </TextField>
+       
                             </Stack>
                           </div>
                           <div style={{

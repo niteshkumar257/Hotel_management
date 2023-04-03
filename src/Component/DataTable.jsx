@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 
 
 export default function DataTable({columns,rows}) {
+  console.log("dataTable,",rows);
   return (
     <Box sx={{ height:"auto", width: '100%' ,display:"flex",
     justifyContent:"center",alignItems:"center"}}>
@@ -18,7 +19,7 @@ export default function DataTable({columns,rows}) {
             fontSize:"17px",
             // fontWeight:900
           },
-          height:"100vh",width :"92vw",
+          height:"100vh",width :"90vw",
           "& .MuiDataGrid-footerContainer": {
             color:"white",
             borderTop: "none",
@@ -31,7 +32,7 @@ export default function DataTable({columns,rows}) {
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 10,
+              pageSize: 5,
             },
           },
         }}

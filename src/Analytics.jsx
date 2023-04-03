@@ -10,19 +10,23 @@ import Chart1 from './Component/Chart1';
 import "./Analytics.scss"
 import TextField from '@mui/material/TextField';
 import { Modal,Stack,MenuItem } from '@mui/material';
+const config=require("./config");
 const months=[
-  {value:"Jan",label:"Jan"},
-  {value:"Feb",label:"Feb"},
-  {value:"March",label:"March"},
-  {value:"April",label:"April"},
-  {value:"May",label:"May"},
-  {value:"June",label:"June"},
-  {value:"July",label:"July"},
-  {value:"Aug",label:"Aug"},
-  {value:"Sep",label:"Sep"},
-  {value:"Oct",label:"Oct"},
-  {value:"Nov",label:"Nov"},
-  {value:"Dec",label:"Dec"},
+  {value:"january",label:"Jan"},
+  {value:"february",label:"Feb"},
+ 
+  {value:"march",label:"March"},
+  {value:"april",label:"April"},
+  {value:"may",label:"May"},
+  {value:"june",label:"June"},
+  {value:"july",label:"July"},
+  {value:"august",label:"Aug"},
+  {value:"september",label:"Sep"},
+  {value:"october",label:"Oct"},
+  {value:"novmber",label:"Nov"},
+  {value:"december",label:"Dec"},
+
+  
 ]
 
 const columns = [
@@ -145,34 +149,38 @@ export default function DataGridDemo() {
     p: 4,
 
   };
-  const [rows,setRows]=useState(row);
+  const [rows,setRows]=useState([]);
   const [month,setMonth]=useState("");
   const [year,setYear]=useState("");
   const [guest,setGuest]=useState("");
   const [expenditure,setExpenditure]=useState("");
   const [open,setOpen]=useState(false);
+  const [show,setShow]=useState(false);
 
-  const token = localStorage.getItem("auth_token");
-  console.log(token)
+
   useEffect(()=>
   {
-    axios.get('https://sebackend.onrender.com/api/analytics/',{
-
-    headers: {"Authorization" : `Bearer ${token}` }
-    }).then((res)=>{
+    console.log("hello")
+    axios.get(`${config.apiUrl}api/analytics/`).
+    then((res)=>{
        console.log(res.data);
-       setRows(rows)
+       setRows(res.data)
+       setShow(true);
     }).catch(err=>{
         console.log(err)   
      })
   },[])
-  const addNewAnalytics=()=>
+  const addNewAnalytics=(e)=>
   {
-      axios.post("api",{
+    e.preventDefault();
+    setOpen(false);
+   
+      axios.post(`${config.apiUrl}api/analytics/`,{
         month:month,
-        year:year,
-        guest:guest,
-        expenditure:expenditure
+         year:year,
+        expenditure:expenditure,
+        number_of_guests:guest
+        
       }).then((res)=>
       {
         console.log(res);
@@ -221,7 +229,7 @@ export default function DataGridDemo() {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                   >
-                    <form onSubmit={Addanalysis}>
+                    <form onSubmit={addNewAnalytics}>
                       <Box sx={style} >
                         <div style={{
                           display: "flex",
@@ -293,9 +301,12 @@ export default function DataGridDemo() {
        </div>
     
       <div className="content_container">
-      <DataTable columns={columns} rows={rows}/>
-      <Chart data={row} />
-      <Chart1 data={row}/>
+        {
+          show &&     <DataTable rows={rows} columns={columns} />
+        }
+   
+      <Chart data={rows} />
+      <Chart1 data={rows}/>
       </div>
     
       </div>

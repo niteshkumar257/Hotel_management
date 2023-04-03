@@ -65,7 +65,7 @@ const data = [
   "number_of_guests": 800
 }
   ]
-const Chart = () => {
+const Chart = ({data}) => {
   return (
     <div>
         <BarChart width={1400} height={300} data={data}>
